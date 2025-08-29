@@ -40,7 +40,7 @@ func getConfigFilePath() (string, error) {
 		return "", err
 	}
 	// We can also use path/filepath package
-	filePath := path + "/Desktop/Blog Aggregator/" + configFileName
+	filePath := path + "/" + configFileName
 	return filePath, nil
 }
 

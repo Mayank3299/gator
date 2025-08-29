@@ -1,27 +1,40 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/Mayank3299/BlogAggregator/internal/config"
 )
+
+type state struct {
+	configFile *config.Config
+}
 
 func main() {
 	file, err := config.Read()
 	if err != nil {
 		log.Fatalf("error reading config: %v", err)
 	}
-	fmt.Printf("Read config %+v\n", file)
 
-	err = file.SetUser("mayank")
-	if err != nil {
-		log.Fatalf("error reading config: %v", err)
+	programState := &state{
+		configFile: &file,
 	}
 
-	file, err = config.Read()
-	if err != nil {
-		log.Fatalf("error reading config: %v", err)
+	cmds := commands{
+		commandsList: make(map[string]func(*state, command) error),
 	}
-	fmt.Printf("Read config again %+v\n", file)
+	cmds.register("login", handlerLogin)
+
+	if len(os.Args) < 2 {
+		log.Fatal("Usage: cli <command> [args...]")
+	}
+
+	cmdName := os.Args[1]
+	cmdArgs := os.Args[2:]
+
+	err = cmds.run(programState, command{Name: cmdName, Args: cmdArgs})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
