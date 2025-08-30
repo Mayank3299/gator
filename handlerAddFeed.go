@@ -10,19 +10,13 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
+func handlerAddFeed(s *state, cmd command, currentUser database.User) error {
 	if len(cmd.Args) < 2 {
 		return errors.New("please provide the arguments for the command")
 	}
 
 	feedName := cmd.Args[0]
 	feedURL := cmd.Args[1]
-	currentUserName := s.configFile.CurrentUser
-
-	currentUser, err := s.db.GetUser(context.Background(), currentUserName)
-	if err != nil {
-		return fmt.Errorf("current user not present in db -%v", err)
-	}
 
 	queryParams := database.CreateFeedParams{
 		ID:        uuid.New(),
@@ -41,7 +35,7 @@ func handlerAddFeed(s *state, cmd command) error {
 	fmt.Println("Feed created")
 	printFeed(feed)
 	// Follow every feed which the current user creates
-	handlerFollow(s, command{Args: []string{feedURL}})
+	handlerFollow(s, command{Args: []string{feedURL}}, currentUser)
 
 	return nil
 }
