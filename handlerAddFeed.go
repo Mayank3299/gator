@@ -40,6 +40,8 @@ func handlerAddFeed(s *state, cmd command) error {
 
 	fmt.Println("Feed created")
 	printFeed(feed)
+	// Follow every feed which the current user creates
+	handlerFollow(s, command{Args: []string{feedURL}})
 
 	return nil
 }

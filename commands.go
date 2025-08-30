@@ -42,3 +42,13 @@ func printFeed(feed database.Feed) {
 	fmt.Printf("* URL:           %s\n", feed.Url)
 	fmt.Printf("* UserID:        %v\n", feed.UserID)
 }
+
+func printFeedFollow(feedFollow database.CreateFeedFollowRow) {
+	fmt.Printf("* ID:            %s\n", feedFollow.ID)
+	fmt.Printf("* Created:       %v\n", feedFollow.CreatedAt)
+	fmt.Printf("* Updated:       %v\n", feedFollow.UpdatedAt)
+	fmt.Printf("* FeedName:      %s\n", feedFollow.FeedName)
+	fmt.Printf("* FeedID:        %s\n", feedFollow.FeedID)
+	fmt.Printf("* UserName:      %s\n", feedFollow.UserName)
+	fmt.Printf("* UserID:        %v\n", feedFollow.UserID)
+}
