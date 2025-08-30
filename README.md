@@ -38,7 +38,12 @@ goose postgres <your-database-url> up
 This will create the required tables (users, feeds, feed_follows, posts, etc.) in your database.
 
 ## Config File
-Gator uses a config file (by default stored in your home directory: ~/.gatorconfig.json) to keep track of the current user and other settings.
+Gator uses a config file (by default stored in your home directory: **~/.gatorconfig.json**) to keep track of the current user and other settings.
+
+File format
+```
+{"db_url":"<your_connection_stiring>?sslmode=disable"}
+```
 
 To create and set a user:
 ```bash
